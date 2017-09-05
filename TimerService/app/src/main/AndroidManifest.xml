@@ -18,9 +18,10 @@
         </activity>
 
         <service
-            android:name=".CountService"
+            android:name=".LocalService"
             android:enabled="true"
             android:exported="true" />
+
         <service
             android:process=":RemoteService"
             android:name="com.sai.test.myremoteservice.MyRemoteService"

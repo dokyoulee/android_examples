@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TestService</string>
+    <string name="desc_permission">Service Permission</string>
+</resources>

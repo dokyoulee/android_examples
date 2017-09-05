@@ -8,7 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/intentsender" />
+            <option value="$PROJECT_DIR$/remotetestprovder" />
+            <option value="$PROJECT_DIR$/remotetestservice" />
+            <option value="$PROJECT_DIR$/testapp" />
+            <option value="$PROJECT_DIR$/testservice" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

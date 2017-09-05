@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RemoteTestService</string>
+    <string name="desc_service_permission">Service permission test(desc)</string>
+</resources>

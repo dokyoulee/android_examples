@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sai.test.timerservice.MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_local_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LS Start"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_local_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="LS Stop"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="232dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="36sp"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="232dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="36sp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/button_local_start"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_remote_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="RS Start"
-        app:layout_constraintLeft_toRightOf="@+id/button"
+        app:layout_constraintLeft_toRightOf="@+id/button_local_start"
         tools:layout_editor_absoluteY="16dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_remote_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="RS Stop"
-        app:layout_constraintLeft_toRightOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintLeft_toRightOf="@+id/button_local_stop"
+        app:layout_constraintTop_toBottomOf="@+id/button_remote_start" />
+
+    <TextView
+        android:id="@+id/textview_local"
+        android:layout_width="232dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="36sp"
+        app:layout_constraintTop_toBottomOf="@+id/button_local_stop"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_remote"
+        android:layout_width="232dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="36sp"
+        app:layout_constraintTop_toBottomOf="@+id/textview_local"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBar_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="358dp"
         android:layout_height="24dp"
@@ -72,12 +78,12 @@
         android:layout_marginBottom="8dp" />
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/progressBar_spin"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar_progress"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 

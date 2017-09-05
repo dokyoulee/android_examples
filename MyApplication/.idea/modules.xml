@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intentsender/intentsender.iml" filepath="$PROJECT_DIR$/intentsender/intentsender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/remotetestprovder/remotetestprovder.iml" filepath="$PROJECT_DIR$/remotetestprovder/remotetestprovder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/remotetestservice/remotetestservice.iml" filepath="$PROJECT_DIR$/remotetestservice/remotetestservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testapp/testapp.iml" filepath="$PROJECT_DIR$/testapp/testapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testservice/testservice.iml" filepath="$PROJECT_DIR$/testservice/testservice.iml" />
     </modules>
   </component>
 </project>

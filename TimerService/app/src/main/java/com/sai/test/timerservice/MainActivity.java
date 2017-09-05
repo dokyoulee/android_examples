@@ -18,29 +18,25 @@ import android.widget.TextView;
 import com.sai.test.myremoteservice.*;
 
 public class MainActivity extends AppCompatActivity {
-    final int UI_MSG_UPDATE_BASE = 100;
-    final int UI_MSG_UPDATE_TV1 = UI_MSG_UPDATE_BASE + 0;
-    final int UI_MSG_UPDATE_TV2 = UI_MSG_UPDATE_BASE + 1;
-    final int UI_MSG_UPDATE_PROG = UI_MSG_UPDATE_BASE + 2;
-    final int UI_MSG_UPDATE_PROG2 = UI_MSG_UPDATE_BASE + 3;
+    static final int UI_MSG_UPDATE_BASE = 100;
+    static final int UI_MSG_UPDATE_TV1 = UI_MSG_UPDATE_BASE + 0;
+    static final int UI_MSG_UPDATE_TV2 = UI_MSG_UPDATE_BASE + 1;
+    static final int UI_MSG_UPDATE_PROG = UI_MSG_UPDATE_BASE + 2;
+    static final int UI_MSG_UPDATE_PROG2 = UI_MSG_UPDATE_BASE + 3;
 
-    Button button;
-    Button button2;
-    Button button3;
-    Button button4;
-    TextView textview;
-    TextView textview2;
-    ProgressBar progressbar;
-    ProgressBar progressbar2;
+    TextView mTextViewLocal;
+    TextView mTextviewRemote;
+    ProgressBar mProgressbarProgress;
+    ProgressBar mProgressbarSpin;
 
-    Thread mLSThread;
-    Thread mRSThread;
+    Thread mLocalServiceThread;
+    Thread mRemoteServiceThread;
     Handler mHandler;
 
     boolean mLocalServiceConnected = false;
     boolean mRemoteServiceConnected = false;
 
-    ICountServiceAIDL mLocalService = null;
+    IMyLocalService mLocalService = null;
     IMyRemoteService mRemoteService = null;
 
     IMyCallback mRemoteCallback = new IMyCallback.Stub() {
@@ -55,22 +51,22 @@ public class MainActivity extends AppCompatActivity {
     Button.OnClickListener mClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.button) {
+            if (v.getId() == R.id.button_local_start) {
                 if (!mLocalServiceConnected) {
-                    Intent ls_intent = new Intent(MainActivity.this, CountService.class);
+                    Intent ls_intent = new Intent(MainActivity.this, LocalService.class);
                     bindService(ls_intent, mLocalServiceConnection, BIND_AUTO_CREATE);
                 }
-            } else if (v.getId() == R.id.button2) {
+            } else if (v.getId() == R.id.button_local_stop) {
                 if (mLocalServiceConnected) {
                     mLocalServiceConnected = false;
                     unbindService(mLocalServiceConnection);
                 }
-            } else if (v.getId() == R.id.button3) {
+            } else if (v.getId() == R.id.button_remote_start) {
                 if (!mRemoteServiceConnected) {
                     Intent rs_intent = new Intent(MainActivity.this, MyRemoteService.class);
                     bindService(rs_intent, mRemoteServiceConnection, BIND_AUTO_CREATE);
                 }
-            } else if (v.getId() == R.id.button4) {
+            } else if (v.getId() == R.id.button_remote_stop) {
                 if (mRemoteServiceConnected) {
                     try {
                         mRemoteService.unregisterCallback(mRemoteCallback);
@@ -88,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("MyApp", "mLocalServiceConnection:onServiceConnected");
-            mLocalService = ICountServiceAIDL.Stub.asInterface(service);
+            mLocalService = IMyLocalService.Stub.asInterface(service);
             if (mLocalService != null) {
-                mLSThread.start();
+                mLocalServiceThread.start();
                 mLocalServiceConnected = true;
             }
         }
@@ -113,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             if (mRemoteService != null) {
-                mRSThread.start();
+                mRemoteServiceThread.start();
                 mRemoteServiceConnected = true;
             }
         }
@@ -130,49 +126,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button)findViewById(R.id.button);
-        button2 = (Button)findViewById(R.id.button2);
-        button3 = (Button)findViewById(R.id.button3);
-        button4 = (Button)findViewById(R.id.button4);
-
+        Button button;
+        button = (Button)findViewById(R.id.button_local_start);
         button.setOnClickListener(mClickListener);
-        button2.setOnClickListener(mClickListener);
-        button3.setOnClickListener(mClickListener);
-        button4.setOnClickListener(mClickListener);
 
-        textview = (TextView) findViewById(R.id.textView);
-        textview2 = (TextView) findViewById(R.id.textView2);
-        textview.setText(String.valueOf(String.valueOf(0)));
-        textview2.setText(String.valueOf(String.valueOf(0)));
+        button = (Button)findViewById(R.id.button_local_stop);
+        button.setOnClickListener(mClickListener);
 
-        progressbar = (ProgressBar)findViewById(R.id.progressBar);
-        progressbar.setMax(100);
-        progressbar2 = (ProgressBar)findViewById(R.id.progressBar2);
-        progressbar2.setMax(100);
+        button = (Button)findViewById(R.id.button_remote_start);
+        button.setOnClickListener(mClickListener);
+
+        button = (Button)findViewById(R.id.button_remote_stop);
+        button.setOnClickListener(mClickListener);
+
+        mTextViewLocal = (TextView) findViewById(R.id.textview_local);
+        mTextViewLocal.setText(String.valueOf(String.valueOf(0)));
+
+        mTextviewRemote = (TextView) findViewById(R.id.textview_remote);
+        mTextviewRemote.setText(String.valueOf(String.valueOf(0)));
+
+        mProgressbarProgress = (ProgressBar)findViewById(R.id.progressBar_progress);
+        mProgressbarProgress.setMax(100);
+        mProgressbarSpin = (ProgressBar)findViewById(R.id.progressBar_spin);
+        mProgressbarSpin.setMax(100);
 
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                int v = msg.arg1;
+                int value = msg.arg1;
+
                 switch(msg.what) {
                     case UI_MSG_UPDATE_TV1:
-                        textview.setText(String.valueOf(v));
+                        mTextViewLocal.setText(String.valueOf(value));
                         break;
                     case UI_MSG_UPDATE_TV2:
-                        textview2.setText(String.valueOf(v));
+                        mTextviewRemote.setText(String.valueOf(value));
                         break;
                     case UI_MSG_UPDATE_PROG:
-                        progressbar.setProgress(v);
+                        mProgressbarProgress.setProgress(value);
                         break;
                     case UI_MSG_UPDATE_PROG2:
-                        progressbar2.setProgress(v);
+                        mProgressbarSpin.setProgress(value);
                         break;
                 }
             }
         };
 
-        mLSThread = new LocalServiceThread();
-        mRSThread = new RemoteServiceThread();
+        mLocalServiceThread = new LocalServiceThread();
+        mRemoteServiceThread = new RemoteServiceThread();
     }
 
     class LocalServiceThread extends Thread {

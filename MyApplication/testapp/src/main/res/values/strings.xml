@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_viewer">ViewerActivity</string>
+    <string name="desc_intent_permission">Intent permission test(desc)</string>
+    <string name="desc_activity_permission">Actviity permission test(desc)</string>
+    <string name="desc_service_permission">Service permission test(desc)</string>
+    <string name="provider_auth">com.sai.test.localtestprovider</string>
+</resources>
