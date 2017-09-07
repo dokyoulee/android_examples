@@ -24,6 +24,7 @@
         android:protectionLevel="dangerous" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.sai.test.testapp.RECEIVER_PERM" />
     <uses-permission android:name="com.sai.test.testservice.SERVICE_PERM" />
     <uses-permission android:name="com.sai.test.testapp.PROVIDER_PERM" />
 
