@@ -2,8 +2,11 @@ package com.sai.test.testapp;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,24 +21,32 @@ import butterknife.OnClick;
 public class ProviderTestActivity extends AppCompatActivity {
     private final static String LOCAL_PROVIDER_AUTH = "com.sai.test.localtestprovider";
     private final static String REMOTE_PROVIDER_AUTH = "com.sai.test.remotetestprovider";
+    private static final String TEST_PROVIDER_PERMISSION = "com.sai.test.testapp.PROVIDER_PERM";
+    private static final int PERMISSIONS_REQUEST = 100;
 
     private String mContentUri = "content://" + LOCAL_PROVIDER_AUTH + "/user";
     private View mCustomView;
-    @BindView(R.id.editText_id) EditText mEditID;
-    @BindView(R.id.editText_user_id) EditText mEditUserID;
-    @BindView(R.id.editText_name) EditText mEditName;
-    @BindView(R.id.editText_age) EditText mEditAge;
-    @BindView(R.id.editText_location) EditText mEditLocation;
+    @BindView(R.id.editText_id)
+    EditText mEditID;
+    @BindView(R.id.editText_user_id)
+    EditText mEditUserID;
+    @BindView(R.id.editText_name)
+    EditText mEditName;
+    @BindView(R.id.editText_age)
+    EditText mEditAge;
+    @BindView(R.id.editText_location)
+    EditText mEditLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_test);
         ButterKnife.bind(this);
+        requestPermission();
     }
 
     @OnClick({R.id.radio_local_provider, R.id.radio_remote_provider})
-    void setProvider (View v) {
+    void setProvider(View v) {
         switch (v.getId()) {
             case R.id.radio_local_provider:
                 mContentUri = "content://" + LOCAL_PROVIDER_AUTH + "/user";
@@ -47,7 +58,7 @@ public class ProviderTestActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.button_query, R.id.button_insert, R.id.button_update, R.id.button_delete})
-    void handleButton (View v) {
+    void handleButton(View v) {
         switch (v.getId()) {
             case R.id.button_query: {
                 String strId = mEditID.getText().toString();
@@ -86,7 +97,7 @@ public class ProviderTestActivity extends AppCompatActivity {
 
     void query(int id) {
         ContentResolver cr = getContentResolver();
-        Cursor c = cr.query(Uri.parse(mContentUri+((id>=0)?"/"+id:"")), null, null, null, null);
+        Cursor c = cr.query(Uri.parse(mContentUri + ((id >= 0) ? "/" + id : "")), null, null, null, null);
 
         String msg = "";
         if (c != null && c.getCount() > 0) {
@@ -113,18 +124,18 @@ public class ProviderTestActivity extends AppCompatActivity {
     void insert(ContentValues cv) {
         ContentResolver cr = getContentResolver();
         Uri uri = cr.insert(Uri.parse(mContentUri), cv);
-        popupToast(uri.toString()+ " inserted.");
+        popupToast(uri.toString() + " inserted.");
     }
 
     void update(int id, ContentValues cv) {
         ContentResolver cr = getContentResolver();
-        int count = cr.update(Uri.parse(mContentUri+((id>=0)?"/"+id:"")), cv, null, null);
+        int count = cr.update(Uri.parse(mContentUri + ((id >= 0) ? "/" + id : "")), cv, null, null);
         popupToast(count + " items updated.");
     }
 
     void delete(int id) {
         ContentResolver cr = getContentResolver();
-        int count = cr.delete(Uri.parse(mContentUri+((id>=0)?"/"+id:"")), null, null);
+        int count = cr.delete(Uri.parse(mContentUri + ((id >= 0) ? "/" + id : "")), null, null);
         popupToast(count + " items deleted.");
     }
 
@@ -135,5 +146,21 @@ public class ProviderTestActivity extends AppCompatActivity {
         }
 
         new CustomPopupToast(this, mCustomView, text);
+    }
+
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(TEST_PROVIDER_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{TEST_PROVIDER_PERMISSION }, PERMISSIONS_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                popupToast("Permission denied");
+            }
+        }
     }
 }

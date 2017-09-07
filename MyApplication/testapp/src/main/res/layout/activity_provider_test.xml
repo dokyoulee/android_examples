@@ -6,37 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.sai.test.testapp.ProviderTestActivity">
 
-    <RadioGroup
-        android:id="@+id/radio_provider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp">
-
-        <RadioButton
-            android:id="@+id/radio_local_provider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Local Provider"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp" />
-
-        <RadioButton
-            android:id="@+id/radio_remote_provider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Remote Provider"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radio_local_provider"
-            android:layout_marginStart="8dp" />
-    </RadioGroup>
-
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="0dp"
@@ -175,5 +144,37 @@
         app:layout_constraintLeft_toRightOf="@+id/button_update"
         app:layout_constraintTop_toBottomOf="@+id/button_query"
         android:layout_marginStart="8dp" />
+
+    <RadioGroup
+        android:id="@+id/radio_provider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <RadioButton
+            android:id="@+id/radio_local_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:text="Local Provider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/radio_remote_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Remote Provider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radio_local_provider" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

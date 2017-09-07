@@ -4,5 +4,14 @@
     <string name="desc_intent_permission">Intent permission test(desc)</string>
     <string name="desc_activity_permission">Actviity permission test(desc)</string>
     <string name="desc_service_permission">Service permission test(desc)</string>
+    <string name="desc_provider_permission">Provider permission test(desc)</string>
     <string name="provider_auth">com.sai.test.localtestprovider</string>
+    <string name="title_activity_media_test">MediaTestActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="frag_name_music">Media test - Music</string>
+    <string name="frag_name_video">Media test - Video</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TestRemoteProvder</string>
+    <string name="desc_provider_permission">Provider permission test(desc)</string>
     <string name="provider_auth">com.sai.test.remotetestprovider</string>
 </resources>

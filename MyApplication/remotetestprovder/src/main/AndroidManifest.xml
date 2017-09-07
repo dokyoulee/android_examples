@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sai.test.testremoteprovder">
 
+    <permission
+        android:name="com.sai.test.testservice.PROVIDER_PERM"
+        android:description="@string/desc_provider_permission"
+        android:label="Provider permission for security"
+        android:protectionLevel="dangerous" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +20,8 @@
             android:name=".RemoteTestProvider"
             android:authorities="@string/provider_auth"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"
+            android:permission="com.sai.test.testapp.PROVIDER_PERM"/>
     </application>
 
 </manifest>
