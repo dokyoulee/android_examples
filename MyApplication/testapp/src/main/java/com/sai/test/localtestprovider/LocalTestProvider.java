@@ -1,7 +1,6 @@
 package com.sai.test.localtestprovider;
 
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -15,9 +14,6 @@ public class LocalTestProvider extends ContentProvider {
     private static final String PROVIDER_AUTH = "com.sai.test.localtestprovider";
     private static final int PROVIDER_USER = 1;
     private static final int PROVIDER_USER_ID = 2;
-
-    private DatabaseHelper mDatabaseHelper;
-
     private static final Uri PROVIDER_URI = Uri.parse("content://" + PROVIDER_AUTH + "/user");
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -25,6 +21,8 @@ public class LocalTestProvider extends ContentProvider {
         sUriMatcher.addURI(PROVIDER_AUTH, "user", PROVIDER_USER);
         sUriMatcher.addURI(PROVIDER_AUTH, "user/#", PROVIDER_USER_ID);
     }
+
+    private DatabaseHelper mDatabaseHelper;
 
     @Override
     public boolean onCreate() {

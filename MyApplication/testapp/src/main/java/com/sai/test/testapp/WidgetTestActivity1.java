@@ -39,24 +39,21 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
     private static final int NOTIFICATION_ID = 100;
 
     private static final int MENU_NEW_GAME = 100;
-    private static final int MENU_QUIT = MENU_NEW_GAME+1;
-    private static final int EDIT_ID = MENU_NEW_GAME+2;
-    private static final int DELETE_ID = MENU_NEW_GAME+3;
-    private static final int START_ID = MENU_NEW_GAME+4;
-    private static final int RESTART_ID = MENU_NEW_GAME+5;
-    private static final int QUIT_ID = MENU_NEW_GAME+6;
-    private static final int PENDING_ID = MENU_NEW_GAME+7;
-
-    private Menu mMenuOption;
-    private View mCustomView;
-
-    private Spinner mContactSpinner;
-    private SimpleCursorAdapter mContactSpinnerAdapter;
-
+    private static final int MENU_QUIT = MENU_NEW_GAME + 1;
+    private static final int EDIT_ID = MENU_NEW_GAME + 2;
+    private static final int DELETE_ID = MENU_NEW_GAME + 3;
+    private static final int START_ID = MENU_NEW_GAME + 4;
+    private static final int RESTART_ID = MENU_NEW_GAME + 5;
+    private static final int QUIT_ID = MENU_NEW_GAME + 6;
+    private static final int PENDING_ID = MENU_NEW_GAME + 7;
     static String mAryData[] = {
             "Data1", "Data2", "Data2", "Data3",
             "Data4", "Data5", "Data6", "Data7",
             "Data8", "Data9", "Data10", "Data11"};
+    private Menu mMenuOption;
+    private View mCustomView;
+    private Spinner mContactSpinner;
+    private SimpleCursorAdapter mContactSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +73,13 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
         buttonNewActivity.setOnClickListener(this);
 
         // Simple spinner with array data
-        Spinner spinner = (Spinner)findViewById(R.id.spinner_simple);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_simple);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mAryData);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(spinnerAdapter);
 
         // Contact spinner using cursorAdapter
-        mContactSpinner = (Spinner)findViewById(R.id.spinner_contact);
+        mContactSpinner = (Spinner) findViewById(R.id.spinner_contact);
 
         // Dynamic permission check and request
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
@@ -100,7 +97,7 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                popupToast("Item clicked : " + ((TextView)view).getText());
+                popupToast("Item clicked : " + ((TextView) view).getText());
             }
         });
     }
@@ -121,9 +118,9 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
                 this,
                 android.R.layout.simple_list_item_2,
                 null,
-                new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER},
-                new int[] {android.R.id.text1,
+                new int[]{android.R.id.text1,
                         android.R.id.text2},
                 0);
 
@@ -149,7 +146,7 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
 
     void RegisterNotification(CharSequence msg) {
         Intent notiIntent = new Intent(this, WidgetTestActivity1.class);
-        notiIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        notiIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         notiIntent.putExtra("data", "return Text");
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -170,12 +167,12 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContent(remoteViews);
 
-        NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(NOTIFICATION_ID, notiBuilder.build());
     }
 
     void UnregisterNotification(int id) {
-        NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(id);
     }
 
@@ -267,7 +264,7 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
     public boolean onContextItemSelected(MenuItem item) {
         super.onContextItemSelected(item);
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case EDIT_ID:
                 popupToast("Edit");
                 break;

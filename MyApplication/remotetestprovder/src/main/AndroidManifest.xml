@@ -21,7 +21,7 @@
             android:authorities="@string/provider_auth"
             android:enabled="true"
             android:exported="true"
-            android:permission="com.sai.test.testapp.PROVIDER_PERM"/>
+            android:permission="com.sai.test.testapp.PROVIDER_PERM" />
     </application>
 
 </manifest>

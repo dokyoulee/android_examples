@@ -5,20 +5,19 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.sai.test.localtestservice.LocalTestService;
 import com.sai.test.testservice.ITestService;
 import com.sai.test.testservice.ITestServiceCallback;
 
@@ -43,12 +42,18 @@ public class ServiceTestActivity extends AppCompatActivity {
     ITestService mLocalService = null;
     ITestService mRemoteService = null;
 
-    @BindView(R.id.button_local_start) Button mButtonLocalStart;
-    @BindView(R.id.button_local_end) Button mButtonLocalEnd;
-    @BindView(R.id.button_remote_start) Button mButtonRemoteStart;
-    @BindView(R.id.button_remote_end) Button mButtonRemoteEnd;
-    @BindView(R.id.tv_local_data) TextView mTextLocalData;
-    @BindView(R.id.tv_remote_data) TextView mTextRemoteData;
+    @BindView(R.id.button_local_start)
+    Button mButtonLocalStart;
+    @BindView(R.id.button_local_end)
+    Button mButtonLocalEnd;
+    @BindView(R.id.button_remote_start)
+    Button mButtonRemoteStart;
+    @BindView(R.id.button_remote_end)
+    Button mButtonRemoteEnd;
+    @BindView(R.id.tv_local_data)
+    TextView mTextLocalData;
+    @BindView(R.id.tv_remote_data)
+    TextView mTextRemoteData;
 
     Handler mHandler = new Handler() {
         @Override

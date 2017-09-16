@@ -1,0 +1,45 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="music_item" type="com.sai.test.CustomMediaPlayer.AudioInfo"/>
+    </data>
+
+    <GridLayout
+        android:id="@+id/layout_song_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:columnCount="2">
+
+        <ImageView
+            android:id="@+id/imageView_art"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_rowSpan="2"
+            app:albumArt="@{music_item.albumId}"/>
+
+        <TextView
+            android:id="@+id/textView_song"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginTop="4dp"
+            android:text="@{music_item.title}"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:text="@{music_item.artist}"
+            android:textSize="10dp" />
+
+    </GridLayout>
+</layout>

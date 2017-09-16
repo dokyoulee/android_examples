@@ -6,9 +6,9 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,16 +25,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button)findViewById(R.id.button_send_intent);
+        Button button = (Button) findViewById(R.id.button_send_intent);
         button.setOnClickListener(this);
 
-        button = (Button)findViewById(R.id.button_send_intent_with_permission);
+        button = (Button) findViewById(R.id.button_send_intent_with_permission);
         button.setOnClickListener(this);
 
-        button = (Button)findViewById(R.id.button_launch_activity);
+        button = (Button) findViewById(R.id.button_launch_activity);
         button.setOnClickListener(this);
 
-        button = (Button)findViewById(R.id.button_launch_matched);
+        button = (Button) findViewById(R.id.button_launch_matched);
         button.setOnClickListener(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSIONS_REQUEST) {
-            for (int i=0; i<grantResults.length; i++) {
+            for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     Log.e("IntentSender", permissions[i] + " : Permission granted");
                 } else {

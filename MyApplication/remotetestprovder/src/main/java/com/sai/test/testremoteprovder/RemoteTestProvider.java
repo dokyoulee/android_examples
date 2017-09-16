@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQuery;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -14,9 +13,6 @@ public class RemoteTestProvider extends ContentProvider {
     private static final String PROVIDER_AUTH = "com.sai.test.remotetestprovider";
     private static final int PROVIDER_USER = 1;
     private static final int PROVIDER_USER_ID = 2;
-
-    private DatabaseHelper mDatabaseHelper;
-
     private static final Uri PROVIDER_URI = Uri.parse("content://" + PROVIDER_AUTH + "/user");
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -24,6 +20,8 @@ public class RemoteTestProvider extends ContentProvider {
         sUriMatcher.addURI(PROVIDER_AUTH, "user", PROVIDER_USER);
         sUriMatcher.addURI(PROVIDER_AUTH, "user/#", PROVIDER_USER_ID);
     }
+
+    private DatabaseHelper mDatabaseHelper;
 
     @Override
     public boolean onCreate() {

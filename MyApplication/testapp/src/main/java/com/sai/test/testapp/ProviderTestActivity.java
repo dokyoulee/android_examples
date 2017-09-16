@@ -6,9 +6,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +23,6 @@ public class ProviderTestActivity extends AppCompatActivity {
     private final static String REMOTE_PROVIDER_AUTH = "com.sai.test.remotetestprovider";
     private static final String TEST_PROVIDER_PERMISSION = "com.sai.test.testapp.PROVIDER_PERM";
     private static final int PERMISSIONS_REQUEST = 100;
-
-    private String mContentUri = "content://" + LOCAL_PROVIDER_AUTH + "/user";
-    private View mCustomView;
     @BindView(R.id.editText_id)
     EditText mEditID;
     @BindView(R.id.editText_user_id)
@@ -36,6 +33,8 @@ public class ProviderTestActivity extends AppCompatActivity {
     EditText mEditAge;
     @BindView(R.id.editText_location)
     EditText mEditLocation;
+    private String mContentUri = "content://" + LOCAL_PROVIDER_AUTH + "/user";
+    private View mCustomView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,8 +149,8 @@ public class ProviderTestActivity extends AppCompatActivity {
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && checkSelfPermission(TEST_PROVIDER_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{TEST_PROVIDER_PERMISSION }, PERMISSIONS_REQUEST);
+                && checkSelfPermission(TEST_PROVIDER_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{TEST_PROVIDER_PERMISSION}, PERMISSIONS_REQUEST);
         }
     }
 

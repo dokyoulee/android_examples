@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String TAB_USER_AGE = "AGE";
     static final String TAB_USER_LOCATION = "LOCATION";
 
-    private static final String SQL_CREATE_MAIN = "CREATE TABLE " + TAB_USER + " ("+
+    private static final String SQL_CREATE_MAIN = "CREATE TABLE " + TAB_USER + " (" +
             TAB_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             TAB_USER_USERID + " VARCHAR(30) NOT NULL," +
             TAB_USER_NAME + " VARCHAR(30) NOT NULL," +
