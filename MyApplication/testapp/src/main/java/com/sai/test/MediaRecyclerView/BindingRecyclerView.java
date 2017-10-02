@@ -1,11 +1,9 @@
 package com.sai.test.MediaRecyclerView;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 public class BindingRecyclerView {

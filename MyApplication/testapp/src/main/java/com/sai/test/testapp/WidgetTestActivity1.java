@@ -269,7 +269,7 @@ public class WidgetTestActivity1 extends AppCompatActivity implements View.OnCli
                 popupToast("Edit");
                 break;
             case DELETE_ID:
-                popupToast("Remove");
+                popupToast("Delete");
                 break;
         }
 
