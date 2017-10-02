@@ -8,21 +8,19 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by sai on 2017-09-15.
  */
 
-public class UserinfoDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "userinfo";
-
+public class UserDatabaseHelper extends SQLiteOpenHelper {
     static final String TABLE_NAME = "user";
     static final String TABLE_USER_ID = "_id";
     static final String TABLE_USER_NAME = "name";
     static final String TABLE_USER_PHONE = "phone";
-
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "userinfo";
     private static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
             + TABLE_USER_ID + " integer primary key autoincrement,"
             + TABLE_USER_NAME + " varchar(20) not null,"
             + TABLE_USER_PHONE + " varchar(10) not null)";
 
-    public UserinfoDatabaseHelper(Context context) {
+    public UserDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -32,5 +30,6 @@ public class UserinfoDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 }

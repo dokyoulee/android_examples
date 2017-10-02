@@ -1,35 +1,20 @@
 package exam.sai.com.designpattern;
 
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-import exam.sai.com.designpattern.R;
 import exam.sai.com.designpattern.databinding.ActivityDesignPatternBinding;
 
 public class DesignPatternActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
     private ActivityDesignPatternBinding mBinding;
 
     @Override
@@ -43,14 +28,6 @@ public class DesignPatternActivity extends AppCompatActivity {
         mBinding.tabs.setupWithViewPager(mBinding.container);
 
         setSupportActionBar(mBinding.toolbar);
-
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -78,12 +55,12 @@ public class DesignPatternActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new EmpFragment();
+            return new UserDataFragment();
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
 
         @Override
@@ -91,8 +68,6 @@ public class DesignPatternActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return "Provider Sample";
-                case 1:
-                    return "SECTION 2";
             }
             return null;
         }

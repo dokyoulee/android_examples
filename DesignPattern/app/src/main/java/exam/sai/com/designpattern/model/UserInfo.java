@@ -5,39 +5,40 @@ package exam.sai.com.designpattern.model;
  */
 
 public class UserInfo {
-    private int mId;
-    private String mUserName;
-    private String mUserPhone;
+    public int id;
+    public String userName;
+    public String userPhone;
+
+    public UserInfo() {
+        this.id = 0;
+        this.userName = "";
+        this.userPhone = "";
+    }
+
+    public UserInfo(UserInfo data) {
+        this.id = data.id;
+        this.userName = data.userName;
+        this.userPhone = data.userPhone;
+    }
 
     public UserInfo(int id, String name, String phone) {
-        mId = id;
-        mUserName = name;
-        mUserPhone = phone;
+        this.id = id;
+        this.userName = name;
+        this.userPhone = phone;
     }
 
-    public int getUserId() {
-        return mId;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof UserInfo)) {
+            return false;
+        }
+
+        UserInfo ui = (UserInfo) obj;
+
+        if (this.id == ui.id) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-    public void setUserId(int id) {
-        mId = id;
-    }
-
-    public String getUserName() {
-        return mUserName;
-    }
-
-    public void setUserName(String name) {
-        mUserName = name;
-    }
-
-    public String getUserPhone() {
-        return mUserPhone;
-    }
-
-    public void setUserPhone(String phone) {
-        mUserPhone = phone;
-    }
-
-
 }
