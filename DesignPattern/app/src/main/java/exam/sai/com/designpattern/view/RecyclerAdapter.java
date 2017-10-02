@@ -1,4 +1,4 @@
-package exam.sai.com.designpattern.EmpRecyclerView;
+package exam.sai.com.designpattern.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +16,12 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<BindingViewHolder> 
     private int mItemLayoutId = 0;
     private DataModel<T> mDataModel;
     private int mBindingId = 0;
-    private IOnItemClickListener mClickListener;
-    private IOnItemSelectedListener mItemSelectedListener;
+    private IItemClickListener mClickListener;
+    private IItemSelectedListener mItemSelectedListener;
 
     public RecyclerAdapter(int itemLayoutId, int bindingId, @NonNull DataModel<T> dataModel,
-                           IOnItemClickListener clickListener,
-                           IOnItemSelectedListener menuItemSelectedListener) {
+                           IItemClickListener clickListener,
+                           IItemSelectedListener menuItemSelectedListener) {
         super();
         mItemLayoutId = itemLayoutId;
         mDataModel = dataModel;

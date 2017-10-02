@@ -1,4 +1,4 @@
-package exam.sai.com.designpattern.EmpRecyclerView;
+package exam.sai.com.designpattern.view;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +17,11 @@ public class BindingViewHolder extends RecyclerView.ViewHolder implements View.O
     private static final int MENU_USER_DELETE = 100;
 
     private UserListItemBinding mBinding;
-    private IOnItemClickListener mClickListener;
-    private IOnItemSelectedListener mItemSelectedListener;
+    private IItemClickListener mClickListener;
+    private IItemSelectedListener mItemSelectedListener;
 
-    public BindingViewHolder(View itemView, IOnItemClickListener clickListener,
-                             IOnItemSelectedListener menuItemSelectedListener) {
+    public BindingViewHolder(View itemView, IItemClickListener clickListener,
+                             IItemSelectedListener menuItemSelectedListener) {
         super(itemView);
         mBinding = UserListItemBinding.bind(itemView);
         mClickListener = clickListener;
@@ -56,6 +56,6 @@ public class BindingViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        mClickListener.OnItemClickListener(getAdapterPosition());
+        mClickListener.onItemClickListener(getAdapterPosition());
     }
 }

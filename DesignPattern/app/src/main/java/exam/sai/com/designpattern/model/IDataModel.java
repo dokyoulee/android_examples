@@ -1,9 +1,9 @@
 package exam.sai.com.designpattern.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDataModel<T> {
-    void set(ArrayList<T> dataList);
+    void set(List<T> dataList);
 
     void add(T data);
 

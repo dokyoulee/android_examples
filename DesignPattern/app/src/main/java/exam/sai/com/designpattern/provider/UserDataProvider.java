@@ -57,8 +57,7 @@ public class UserDataProvider extends ContentProvider {
         SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(UserDatabaseHelper.TABLE_NAME);
-        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-        return cursor;
+        return queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     @Nullable

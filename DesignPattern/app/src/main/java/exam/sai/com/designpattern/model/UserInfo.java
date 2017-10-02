@@ -33,12 +33,6 @@ public class UserInfo {
             return false;
         }
 
-        UserInfo ui = (UserInfo) obj;
-
-        if (this.id == ui.id) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.id == ((UserInfo) obj).id;
     }
 }

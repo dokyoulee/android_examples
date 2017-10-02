@@ -8,6 +8,9 @@ import android.databinding.InverseMethod;
  */
 
 public class Converter {
+    private Converter() {
+    }
+
     @InverseMethod("toInt")
     public static String toString(int num) {
         return String.valueOf(num);

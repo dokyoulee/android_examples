@@ -13,7 +13,7 @@ import exam.sai.com.designpattern.provider.UserDataProvider;
  * TODO: need to be refactored much clearer
  */
 
-public class UserDataModelAdapter implements IDataModelAdapter, IDataModelObserver<UserInfo> {
+public class UserDataModelAdapter extends  DataModelAdapter implements IDataModelObserver<UserInfo> {
     private IDataModel<UserInfo> mDataModel;
     private ContentResolver mContentResolver;
 
@@ -25,15 +25,17 @@ public class UserDataModelAdapter implements IDataModelAdapter, IDataModelObserv
 
     @Override
     public void loadDataFromContentProvider(int type) {
-        if (type == IDataModelAdapter.LOADTYPE_SYNC) {
+        if (type == DataModelAdapter.LOADTYPE_SYNC) {
             Cursor cursor = mContentResolver.query(UserDataProvider.USER_PROVIDER_URI, null, null, null, null);
 
             // unregister an observer to avoid a recursive callback
             mDataModel.unregisterObserver(this);
-            onDataLoaded(cursor);
-            cursor.close();
+            if (cursor != null) {
+                onDataLoaded(cursor);
+                cursor.close();
+            }
             mDataModel.registerObserver(this);
-        } else if (type == IDataModelAdapter.LOADTYPE_ASYNC) {
+        } else if (type == DataModelAdapter.LOADTYPE_ASYNC) {
             // TODO: Need to implement an async data loader
         }
     }
@@ -45,7 +47,7 @@ public class UserDataModelAdapter implements IDataModelAdapter, IDataModelObserv
 
     private void onDataLoaded(Cursor cursor) {
         if (cursor != null && cursor.getCount() > 0) {
-            int colIndex[] = new int[UserDataProvider.ColumnName.length];
+            int[] colIndex = new int[UserDataProvider.ColumnName.length];
             String[] colNames = UserDataProvider.ColumnName;
 
             for (int i = 0; i < colIndex.length; i++) {

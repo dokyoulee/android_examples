@@ -2,9 +2,10 @@ package exam.sai.com.designpattern.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class DataModel<T> implements IDataModel<T> {
-    ArrayList<T> mData;
+    List<T> mData;
     HashSet<IDataModelObserver<T>> mObservers;
 
     public DataModel() {
@@ -13,7 +14,7 @@ public class DataModel<T> implements IDataModel<T> {
     }
 
     @Override
-    public void set(ArrayList<T> dataList) {
+    public void set(List<T> dataList) {
         mData = dataList;
     }
 

@@ -7,19 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import exam.sai.com.designpattern.EmpRecyclerView.IOnItemSelectedListener;
-import exam.sai.com.designpattern.EmpRecyclerView.IOnItemClickListener;
-import exam.sai.com.designpattern.EmpRecyclerView.RecyclerAdapter;
+import exam.sai.com.designpattern.model.DataModelAdapter;
+import exam.sai.com.designpattern.view.IItemSelectedListener;
+import exam.sai.com.designpattern.view.IItemClickListener;
+import exam.sai.com.designpattern.view.RecyclerAdapter;
 import exam.sai.com.designpattern.databinding.FragmentDesignPatternBinding;
 import exam.sai.com.designpattern.model.DataModel;
-import exam.sai.com.designpattern.model.IDataModelAdapter;
 import exam.sai.com.designpattern.model.IDataModelObserver;
 import exam.sai.com.designpattern.model.ObservableUserInfo;
 import exam.sai.com.designpattern.model.UserDataModelAdapter;
 import exam.sai.com.designpattern.model.UserInfo;
 
 public class UserDataFragment extends Fragment implements IDataModelObserver<UserInfo>,
-        IOnItemClickListener, IOnItemSelectedListener {
+        IItemClickListener, IItemSelectedListener {
     private FragmentDesignPatternBinding mBinding;
 
     // DataModel
@@ -49,7 +49,7 @@ public class UserDataFragment extends Fragment implements IDataModelObserver<Use
         mDataModel = new DataModel();
 
         mDataModelAdapter = new UserDataModelAdapter(getContext().getContentResolver(), mDataModel);
-        mDataModelAdapter.loadDataFromContentProvider(IDataModelAdapter.LOADTYPE_SYNC);
+        mDataModelAdapter.loadDataFromContentProvider(DataModelAdapter.LOADTYPE_SYNC);
 
         mRecyclerAdapter = new RecyclerAdapter(R.layout.user_list_item, BR.userInfo, mDataModel, this, this);
         mBinding.recyclerList.setAdapter(mRecyclerAdapter);
@@ -95,7 +95,7 @@ public class UserDataFragment extends Fragment implements IDataModelObserver<Use
     }
 
     @Override
-    public void OnItemClickListener(int position) {
+    public void onItemClickListener(int position) {
         mInputData.setUserInfo(mDataModel.getAt(position));
     }
 
