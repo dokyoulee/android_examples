@@ -13,7 +13,7 @@ import exam.sai.com.designpattern.provider.UserDataProvider;
  * TODO: need to be refactored much clearer
  */
 
-public class UserDataModelAdapter extends  DataModelAdapter implements IDataModelObserver<UserInfo> {
+public class UserDataModelAdapter extends DataModelAdapter implements IDataModelObserver<UserInfo> {
     private IDataModel<UserInfo> mDataModel;
     private ContentResolver mContentResolver;
 

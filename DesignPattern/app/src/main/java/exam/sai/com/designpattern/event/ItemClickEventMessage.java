@@ -1,4 +1,4 @@
-package exam.sai.com.designpattern.global;
+package exam.sai.com.designpattern.event;
 
 /**
  * Created by sai on 2017-10-02.

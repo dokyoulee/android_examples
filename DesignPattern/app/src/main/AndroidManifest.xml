@@ -19,12 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <provider
-            android:authorities="exam.sai.com.userinfoprovider"
             android:name="exam.sai.com.designpattern.provider.UserDataProvider"
+            android:authorities="exam.sai.com.userinfoprovider"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

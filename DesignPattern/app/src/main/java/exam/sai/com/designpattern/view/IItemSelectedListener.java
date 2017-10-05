@@ -5,5 +5,5 @@ package exam.sai.com.designpattern.view;
  */
 
 public interface IItemSelectedListener {
-    void onItemSelectedListener(int position);
+    void onMenuSelectedListener(int type, int position);
 }

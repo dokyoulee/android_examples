@@ -6,21 +6,26 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
 import exam.sai.com.designpattern.databinding.UserListItemBinding;
+import exam.sai.com.designpattern.event.ItemClickEventMessage;
+import exam.sai.com.designpattern.event.MenuSelectedEventMessage;
+import exam.sai.com.designpattern.global.BaseConfig;
 
 /**
  * Created by sai on 2017-09-15.
  */
 
-public class BindingViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener,
+class BindingViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener,
         MenuItem.OnMenuItemClickListener, View.OnClickListener {
-    private static final int MENU_USER_DELETE = 100;
+    private static final int MENU_DELETE = 100;
 
     private UserListItemBinding mBinding;
     private IItemClickListener mClickListener;
     private IItemSelectedListener mItemSelectedListener;
 
-    public BindingViewHolder(View itemView, IItemClickListener clickListener,
+    BindingViewHolder(View itemView, IItemClickListener clickListener,
                              IItemSelectedListener menuItemSelectedListener) {
         super(itemView);
         mBinding = UserListItemBinding.bind(itemView);
@@ -28,7 +33,7 @@ public class BindingViewHolder extends RecyclerView.ViewHolder implements View.O
         mItemSelectedListener = menuItemSelectedListener;
     }
 
-    public void onBind(View v) {
+    void onBind(View v) {
         v.setOnClickListener(this);
         v.setOnCreateContextMenuListener(this);
     }
@@ -40,22 +45,31 @@ public class BindingViewHolder extends RecyclerView.ViewHolder implements View.O
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("Select Action");
-        MenuItem menuItemDelete = menu.add(0, MENU_USER_DELETE, 0, "Delete");
+        MenuItem menuItemDelete = menu.add(0, MENU_DELETE, 0, "Delete");
         menuItemDelete.setOnMenuItemClickListener(this);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_USER_DELETE:
-                mItemSelectedListener.onItemSelectedListener(getAdapterPosition());
-                break;
+        if (BaseConfig.useEventbusForNotify() == false) {
+            if (mItemSelectedListener != null) {
+                mItemSelectedListener.onMenuSelectedListener(MENU_DELETE, getAdapterPosition());
+            }
+        } else {
+            EventBus.getDefault().post(new MenuSelectedEventMessage(MENU_DELETE, getAdapterPosition()));
         }
+
         return false;
     }
 
     @Override
     public void onClick(View v) {
-        mClickListener.onItemClickListener(getAdapterPosition());
+        if (BaseConfig.useEventbusForNotify() == false) {
+            if (mClickListener != null) {
+                mClickListener.onItemClickListener(getAdapterPosition());
+            }
+        } else {
+            EventBus.getDefault().post(new ItemClickEventMessage(getAdapterPosition()));
+        }
     }
 }

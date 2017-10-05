@@ -1,12 +1,17 @@
 package exam.sai.com.designpattern.model;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import exam.sai.com.designpattern.event.DataModelEventMessage;
+import exam.sai.com.designpattern.global.BaseConfig;
+
 public class DataModel<T> implements IDataModel<T> {
-    List<T> mData;
-    HashSet<IDataModelObserver<T>> mObservers;
+    private List<T> mData;
+    private HashSet<IDataModelObserver<T>> mObservers;
 
     public DataModel() {
         mData = new ArrayList<>();
@@ -72,9 +77,15 @@ public class DataModel<T> implements IDataModel<T> {
         mObservers.remove(observer);
     }
 
-    public void notifyChanged(int type, int index, T data) {
-        for (IDataModelObserver ob : mObservers) {
-            ob.onDataModelChanged(type, index, data);
+    private void notifyChanged(int type, int position, T data) {
+        if (BaseConfig.useEventbusForNotify() == false) {
+            for (IDataModelObserver ob : mObservers) {
+                if (ob != null) {
+                    ob.onDataModelChanged(type, position, data);
+                }
+            }
+        } else {
+            EventBus.getDefault().post(new DataModelEventMessage<>(type, position, data));
         }
     }
 }

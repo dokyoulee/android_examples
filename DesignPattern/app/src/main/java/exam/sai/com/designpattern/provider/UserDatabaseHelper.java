@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by sai on 2017-09-15.
  */
 
-public class UserDatabaseHelper extends SQLiteOpenHelper {
+class UserDatabaseHelper extends SQLiteOpenHelper {
     static final String TABLE_NAME = "user";
     static final String TABLE_USER_ID = "_id";
     static final String TABLE_USER_NAME = "name";
@@ -20,7 +20,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             + TABLE_USER_NAME + " varchar(20) not null,"
             + TABLE_USER_PHONE + " varchar(10) not null)";
 
-    public UserDatabaseHelper(Context context) {
+    UserDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

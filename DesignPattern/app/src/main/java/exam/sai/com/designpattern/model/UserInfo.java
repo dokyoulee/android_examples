@@ -9,19 +9,7 @@ public class UserInfo {
     public String userName;
     public String userPhone;
 
-    public UserInfo() {
-        this.id = 0;
-        this.userName = "";
-        this.userPhone = "";
-    }
-
-    public UserInfo(UserInfo data) {
-        this.id = data.id;
-        this.userName = data.userName;
-        this.userPhone = data.userPhone;
-    }
-
-    public UserInfo(int id, String name, String phone) {
+    UserInfo(int id, String name, String phone) {
         this.id = id;
         this.userName = name;
         this.userPhone = phone;
