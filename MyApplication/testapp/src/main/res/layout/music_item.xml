@@ -31,7 +31,7 @@
             android:text="@{music_item.title}"
             android:gravity="center_vertical"
             android:textColor="@android:color/black"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:text="@{music_item.artist}"
-            android:textSize="10dp" />
+            android:textSize="10sp" />
 
     </GridLayout>
 </layout>

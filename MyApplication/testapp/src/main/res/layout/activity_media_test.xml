@@ -10,8 +10,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.sai.test.testapp.MediaTestActivity">
 
-
-
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"

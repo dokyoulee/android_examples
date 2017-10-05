@@ -14,8 +14,12 @@ public class AudioInfo extends MediaInfo {
     public AudioInfo(int id, Uri uri, int albumId, String albumTitle, String albumArt,
                      String title, String artist, long duration) {
         super(MediaInfo.MEDIAINFO_TYPE_AUDIO, uri);
-        this.id = id; this.albumTitle = albumTitle; this.albumId = albumId;
-        this.albumArt = albumArt; this.title = title; this.artist = artist;
+        this.id = id;
+        this.albumTitle = albumTitle;
+        this.albumId = albumId;
+        this.albumArt = albumArt;
+        this.title = title;
+        this.artist = artist;
         this.duration = duration;
     }
 }

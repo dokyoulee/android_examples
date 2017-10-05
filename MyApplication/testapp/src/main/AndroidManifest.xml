@@ -27,10 +27,8 @@
     <uses-permission android:name="com.sai.test.testapp.RECEIVER_PERM" />
     <uses-permission android:name="com.sai.test.testservice.SERVICE_PERM" />
     <uses-permission android:name="com.sai.test.testapp.PROVIDER_PERM" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -96,6 +94,10 @@
         <activity
             android:name=".MediaTestActivity"
             android:label="@string/title_activity_media_test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RetrofitActivity"
+            android:label="@string/title_activity_retrofit"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
             R.id.button_intent_test,
             R.id.button_service_test,
             R.id.button_provider_test,
-            R.id.button_media_test})
+            R.id.button_media_test,
+            R.id.button_retrofit})
     void handleButtonClock(View v) {
         Intent intent;
 
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.button_media_test:
                 intent = new Intent(this, MediaTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.button_retrofit:
+                intent = new Intent(this, RetrofitActivity.class);
                 startActivity(intent);
                 break;
             default:
