@@ -1,4 +1,4 @@
-package com.sai.test.MediaRecyclerView;
+package com.sai.test.RecyclerView;
 
 import android.database.Cursor;
 import android.databinding.BindingAdapter;

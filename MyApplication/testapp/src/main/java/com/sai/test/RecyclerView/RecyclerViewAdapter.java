@@ -1,20 +1,19 @@
-package com.sai.test.MediaRecyclerView;
+package com.sai.test.RecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import java.util.List;
 
-public class MediaAdapter<T> extends RecyclerView.Adapter<BindingViewHolder> {
+public class RecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingViewHolder> {
     private List<T> mData;
     private int mLayoutResourceId;
     private int mBindVarId;
     private IOnItemClickListener mListener;
 
-    public MediaAdapter(int layout, int variable, IOnItemClickListener listener) {
+    public RecyclerViewAdapter(int layout, int variable, IOnItemClickListener listener) {
         mLayoutResourceId = layout;
         mBindVarId = variable;
         mListener = listener;
@@ -30,11 +29,6 @@ public class MediaAdapter<T> extends RecyclerView.Adapter<BindingViewHolder> {
         } else {
             return null;
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
     }
 
     @Override

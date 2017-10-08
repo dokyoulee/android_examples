@@ -1,11 +1,10 @@
-package com.sai.test.MediaRecyclerView;
+package com.sai.test.RecyclerView;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 
 public class BindingViewHolder extends RecyclerView.ViewHolder {
     private ViewDataBinding mBinding;
@@ -18,13 +17,15 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBind(View v, final int position) {
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("onBind", "Test");
-                mListener.OnItemClickListerner(position);
-            }
-        });
+        if (mListener != null) {
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("onBind", "Test");
+                    mListener.OnItemClickListerner(position);
+                }
+            });
+        }
     }
 
     public ViewDataBinding getBinding() {

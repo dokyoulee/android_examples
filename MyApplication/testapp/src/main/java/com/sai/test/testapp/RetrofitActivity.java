@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.sai.test.RestfulRecyclerView.OrderBookAdapter;
+import com.sai.test.RecyclerView.RecyclerViewAdapter;
 import com.sai.test.retrofit.OrderBook;
 import com.sai.test.retrofit.OrderBookService;
 import com.sai.test.testapp.databinding.ActivityRetrofitBinding;
@@ -18,15 +20,26 @@ import com.sai.test.testapp.databinding.ActivityRetrofitBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST = 100;
     private static final String RECEIVER_PERMISSION = "android.permission.INTERNET";
 
     ActivityRetrofitBinding mBinding;
-    OrderBookAdapter mOrderBookAdapter;
+    RecyclerViewAdapter mOrderBookAdapter;
+    OrderBookService mOrderBookService;
+    Callback mOrderBookCallback = new Callback<OrderBook>() {
+        @Override
+        public void onResponse(Call<OrderBook> call, Response<OrderBook> response) {
+            mOrderBookAdapter.setData(response.body().bid);
+            mOrderBookAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailure(Call<OrderBook> call, Throwable t) {
+            Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +48,27 @@ public class RetrofitActivity extends AppCompatActivity {
         mBinding.content.setVariable(BR.retrofitActivity, this);
         setSupportActionBar(mBinding.toolbar);
         mBinding.content.rvOutput.setLayoutManager(new LinearLayoutManager(this));
+        mOrderBookService = OrderBookService.retrofit.create(OrderBookService.class);
+        mBinding.content.spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OrderBookService.currencyList));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mOrderBookAdapter = new RecyclerViewAdapter<>(R.layout.orderbook_item, BR.order, null);
+        mBinding.content.rvOutput.setAdapter(mOrderBookAdapter);
         requestPermission(RECEIVER_PERMISSION);
     }
 
     public void onButtonClick(View v) {
         if (v.getId() == R.id.button_run) {
-            queryOrderBookData("https://api.coinone.co.kr/", "eth");
+            queryOrderBookData(mBinding.content.spinner.getSelectedItem().toString());
         }
     }
 
-    private void queryOrderBookData(String url, String currency) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        OrderBookService orderBookService = retrofit.create(OrderBookService.class);
-        Call<OrderBook> call = orderBookService.getOrderBooks(currency);
-        call.enqueue(new Callback<OrderBook>() {
-            @Override
-            public void onResponse(Call<OrderBook> call, Response<OrderBook> response) {
-                mOrderBookAdapter = new OrderBookAdapter<>(R.layout.orderbook_item, BR.order, response.body().bid);
-                mBinding.content.rvOutput.setAdapter(mOrderBookAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<OrderBook> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void queryOrderBookData(String currency) {
+        Call<OrderBook> call = mOrderBookService.getOrderBooks(currency);
+        call.enqueue(mOrderBookCallback);
     }
 
     private void requestPermission(String permission) {

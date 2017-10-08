@@ -1,6 +1,4 @@
-package com.sai.test.MediaRecyclerView;
-
-import android.view.View;
+package com.sai.test.RecyclerView;
 
 public interface IOnItemClickListener {
     public void OnItemClickListerner(int position);
