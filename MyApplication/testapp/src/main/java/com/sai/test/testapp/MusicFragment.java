@@ -23,8 +23,8 @@ import com.sai.test.CustomMediaPlayer.AudioInfo;
 import com.sai.test.CustomMediaPlayer.CustomMediaPlayer;
 import com.sai.test.CustomMediaPlayer.IPlayerStatusCallback;
 import com.sai.test.CustomMediaPlayer.MediaInfo;
-import com.sai.test.MediaRecyclerView.IOnItemClickListener;
-import com.sai.test.MediaRecyclerView.MediaAdapter;
+import com.sai.test.RecyclerView.IOnItemClickListener;
+import com.sai.test.RecyclerView.RecyclerViewAdapter;
 import com.sai.test.PlayInfoBinding.PlayInfo;
 import com.sai.test.testapp.databinding.FragmentMusicBinding;
 
@@ -36,7 +36,7 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
         IOnItemClickListener, IPlayerStatusCallback {
     private static final int PERMISSIONS_REQUEST = 100;
     LinearLayoutManager mLayoutManager;
-    MediaAdapter<MediaInfo> mMediaAdapter;
+    RecyclerViewAdapter<MediaInfo> mRecyclerViewAdapter;
     FragmentMusicBinding mFragMusicBinding;
     CustomMediaPlayer mMediaPlayer;
     PlayInfo mPlayInfo;
@@ -71,9 +71,9 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
         mPlayInfoCallback = new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                Log.e("MusicPlayer", "onPropertyChanged");
-                new Throwable().printStackTrace();
-                mMediaPlayer.seekTo(mPlayInfo.seekProgress.get());
+                if (Math.abs(mMediaPlayer.getProgress()-mPlayInfo.seekProgress.get()) > 100) {
+                    mMediaPlayer.seekTo(mPlayInfo.seekProgress.get());
+                }
             }
         };
         mPlayInfo.seekProgress.addOnPropertyChangedCallback(mPlayInfoCallback);
@@ -115,7 +115,7 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        List<MediaInfo> aryData = new ArrayList<MediaInfo>();
+        List<MediaInfo> aryData = new ArrayList<>();
         Uri uri;
         int id;
 
@@ -146,17 +146,17 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
             aryData.add(aryData.get(i));
         }
 
-        mMediaAdapter = new MediaAdapter<MediaInfo>(R.layout.music_item, BR.music_item, this);
-        mFragMusicBinding.recyclerViewItemList.setAdapter(mMediaAdapter);
-        mMediaAdapter.setData(aryData);
+        mRecyclerViewAdapter = new RecyclerViewAdapter<>(R.layout.music_item, BR.music_item, this);
+        mFragMusicBinding.recyclerViewItemList.setAdapter(mRecyclerViewAdapter);
+        mRecyclerViewAdapter.setData(aryData);
         mMediaPlayer.registerCallback(this);
-        mMediaAdapter.notifyDataSetChanged();
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mMediaAdapter.setData(null);
-        mMediaAdapter.notifyDataSetChanged();
+        mRecyclerViewAdapter.setData(null);
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void buttonHandler(View view) {
@@ -186,7 +186,7 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void OnItemClickListerner(int position) {
         try {
-            mMediaPlayer.play(mMediaAdapter.getItem(position));
+            mMediaPlayer.play(mRecyclerViewAdapter.getItem(position));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -197,7 +197,11 @@ public class MusicFragment extends Fragment implements LoaderManager.LoaderCallb
         Log.e("MusicPlayer", "onMediaChanged");
         mFragMusicBinding.textViewMusician.setText(((AudioInfo) mi).albumTitle);
         mPlayInfo.seekMax.set(mMediaPlayer.getDuration());
-        onPlaybackProgress(progress);
+        if (status == CustomMediaPlayer.CMP_STOPPED) {
+            onPlaybackProgress(0);
+        } else {
+            onPlaybackProgress(progress);
+        }
     }
 
     @Override

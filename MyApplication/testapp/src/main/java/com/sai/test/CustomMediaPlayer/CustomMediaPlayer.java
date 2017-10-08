@@ -26,7 +26,6 @@ public class CustomMediaPlayer {
     private List<IPlayerStatusCallback> mCallback = null;
     private int mStatus = CMP_UNKNOWN;
     private Context mContext = null;
-    private MusicInfoAsyncTask mPlayStatusThread = null;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -44,7 +43,7 @@ public class CustomMediaPlayer {
         mContext = context;
         mMediaInfo = null;
         mMediaPlayer = new MediaPlayer();
-        mCallback = new ArrayList<IPlayerStatusCallback>();
+        mCallback = new ArrayList<>();
         mStatus = CMP_STOPPED;
     }
 
@@ -88,8 +87,8 @@ public class CustomMediaPlayer {
             mMediaPlayer.pause();
         }
 
-        notifyMediaChanged();
         mStatus = CMP_PAUSED;
+        notifyMediaChanged();
     }
 
     public void stop() {
@@ -99,8 +98,8 @@ public class CustomMediaPlayer {
             mMediaPlayer.reset();
         }
 
-        notifyMediaChanged();
         mStatus = CMP_STOPPED;
+        notifyMediaChanged();
     }
 
     public void seekTo(int duration) {
@@ -127,6 +126,10 @@ public class CustomMediaPlayer {
 
     public int getDuration() {
         return mMediaPlayer.getDuration();
+    }
+
+    public int getProgress() {
+        return mMediaPlayer.getCurrentPosition();
     }
 
     public void clear() {
