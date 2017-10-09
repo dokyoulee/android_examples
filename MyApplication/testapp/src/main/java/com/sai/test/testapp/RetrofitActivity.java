@@ -9,12 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.sai.test.RecyclerView.RecyclerViewAdapter;
+import com.sai.test.retrofit.Balance;
+import com.sai.test.retrofit.CoinOneService;
 import com.sai.test.retrofit.OrderBook;
-import com.sai.test.retrofit.OrderBookService;
 import com.sai.test.testapp.databinding.ActivityRetrofitBinding;
 
 import retrofit2.Call;
@@ -27,8 +27,9 @@ public class RetrofitActivity extends AppCompatActivity {
 
     ActivityRetrofitBinding mBinding;
     RecyclerViewAdapter mOrderBookAdapter;
-    OrderBookService mOrderBookService;
-    Callback mOrderBookCallback = new Callback<OrderBook>() {
+
+    CoinOneService mCoinOnePublic;
+    Callback mCoinOnePubCallback = new Callback<OrderBook>() {
         @Override
         public void onResponse(Call<OrderBook> call, Response<OrderBook> response) {
             mOrderBookAdapter.setData(response.body().bid);
@@ -41,6 +42,24 @@ public class RetrofitActivity extends AppCompatActivity {
         }
     };
 
+    CoinOneService mCoinOnePrivate;
+    Callback mCoinOnePriCallback = new Callback<Balance>() {
+        @Override
+        public void onResponse(Call<Balance> call, Response<Balance> response) {
+            if (response.code() == 200) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        response.body().krw.toString() + "\n" + response.body().eth.toString(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Balance> call, Throwable t) {
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +67,9 @@ public class RetrofitActivity extends AppCompatActivity {
         mBinding.content.setVariable(BR.retrofitActivity, this);
         setSupportActionBar(mBinding.toolbar);
         mBinding.content.rvOutput.setLayoutManager(new LinearLayoutManager(this));
-        mOrderBookService = OrderBookService.retrofit.create(OrderBookService.class);
-        mBinding.content.spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OrderBookService.currencyList));
+        mCoinOnePublic = CoinOneService.retrofitPublic.create(CoinOneService.class);
+        mCoinOnePrivate = CoinOneService.retrofitPrivate.create(CoinOneService.class);
+        mBinding.content.spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, CoinOneService.currencyList));
     }
 
     @Override
@@ -63,12 +83,18 @@ public class RetrofitActivity extends AppCompatActivity {
     public void onButtonClick(View v) {
         if (v.getId() == R.id.button_run) {
             queryOrderBookData(mBinding.content.spinner.getSelectedItem().toString());
+            queryBalance();
         }
     }
 
     private void queryOrderBookData(String currency) {
-        Call<OrderBook> call = mOrderBookService.getOrderBooks(currency);
-        call.enqueue(mOrderBookCallback);
+        Call<OrderBook> callOrderbook = mCoinOnePublic.getOrderBooks(currency);
+        callOrderbook.enqueue(mCoinOnePubCallback);
+    }
+
+    private void queryBalance() {
+        Call<Balance> callBalance = mCoinOnePrivate.getBalance();
+        callBalance.enqueue(mCoinOnePriCallback);
     }
 
     private void requestPermission(String permission) {
